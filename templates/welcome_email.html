@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .email-container {
+            background-color: white;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 700px;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .content {
+            padding: 20px;
+            color: #333333;
+            line-height: 1.6;
+        }
+
+        .content h2 {
+            color: black;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #777777;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            color: white;
+            background-color: #007bff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .logo {
+            animation: rotate 5s linear infinite;
+        }
+    </style>
+</head>
+<body>
+<div class="email-container">
+    <div style="border:none;border-bottom:solid 1px #d0d0d0;text-align:center">
+        <img src="https://ci3.googleusercontent.com/meips/ADKq_NaPJl4R98THMbMrfeUWIMmNywIO9UHJqVuSq8gzlCMWv4hfMfXccjWJ3bhaa8GygDHJKQu0qK3DQLgi_aClpBRebI41hjJrXCos68mLlPNbcC3SmemBA0Rb8JwmGWutZPk=s0-d-e1-ft#https://fra1.digitaloceanspaces.com/botcommerce/static/images/logo_mini.png"
+             style="margin-bottom:1rem;text-align:center;width:5rem;margin-left:auto;margin-right:auto" class="logo CToWUd"
+             data-bit="iit">
+    </div>
+
+    <div class="content">
+        <h3>Hello {{ user.first_name }} {{ user.last_name }},</h3>
+        <p>Thank you for registering at our site. We're excited to have you on board!</p>
+        <p>We hope you enjoy exploring our platform and making the most of the services we offer.</p>
+        <p>If you have any questions or need assistance, feel free to reply to this email.</p>
+        <p>
+            <a href="{{ confirmation_url }}" class="button">Confirm Your Account</a>
+        </p>
+
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 Your Company Name. All rights reserved.</p>
+    </div>
+</div>
+</body>
+</html>
