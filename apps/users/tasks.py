@@ -14,7 +14,7 @@ from users.models import User
 def send_welcome_email(user_id, token):
     try:
         user = User.objects.get(id=user_id)
-        confirmation_url = f"{settings.DOMAIN}{reverse('confirm_user', args=[user_id, token])}"
+        confirmation_url = f"{settings.DOMAIN}{reverse('confirm_account', args=[token])}"
         email_html_message = render_to_string('welcome_email.html',
                                               {'user': user, 'confirmation_url': confirmation_url})
         email_subject = 'Welcome to Our Site'
@@ -40,4 +40,3 @@ def generate_unique_invitation_code():
         invitation_code = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
         if not User.objects.filter(invitation_code=invitation_code).exists():
             return invitation_code
-

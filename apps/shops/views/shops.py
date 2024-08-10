@@ -7,6 +7,7 @@ from shops.models import Shop, Country
 from shops.serializers import ShopModelSerializer, CountryModelSerializer
 
 
+@extend_schema(tags=['Others'])
 class CountryListAPIView(ListAPIView):
     queryset = Country.objects.all()
     serializer_class = CountryModelSerializer
@@ -27,7 +28,7 @@ class ShopListCreateAPIView(ListCreateAPIView):
         if self.request.method == 'POST':
             return self.serializer_class(*args, **kwargs,
                                          fields=['name', 'category', 'country', 'languages', 'currency', 'phone'])
-        return self.serializer_class(*args, **kwargs, fields=['name', 'category'])
+        return self.serializer_class(*args, **kwargs, fields=['name', 'category', 'status'])
 
 
 @extend_schema(tags=['Shops'])

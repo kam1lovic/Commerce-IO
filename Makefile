@@ -13,10 +13,7 @@ celery:
 	 celery -A root worker --loglevel=info
 initdb:
 	./init-db.sh
-	python3 manage.py populate_user 20
-	python3 manage.py populate_shop 5
-	python3 manage.py populate_category 20
-	python3 manage.py populate_product 40
+	python3 manage.py populate_user 20 populate_shop 5 populate_category 20 populate_product 40
 
 freeze:
 	pip freeze > requirements.txt

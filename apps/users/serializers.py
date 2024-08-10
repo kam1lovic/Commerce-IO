@@ -1,15 +1,15 @@
-from users.models import User
 from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from rest_framework import serializers
-from rest_framework.serializers import ModelSerializer, Serializer
+from rest_framework.serializers import Serializer, ModelSerializer, CharField
 
+from users.models import User
 from users.tasks import send_welcome_email, generate_token
 
 
-class SignUpSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
-    password2 = serializers.CharField(write_only=True)
+class SignUpSerializer(ModelSerializer):
+    password = CharField(write_only=True)
+    password2 = CharField(write_only=True)
 
     class Meta:
         model = User
@@ -25,12 +25,17 @@ class SignUpSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
 
         token = generate_token()
-        cache.set(f"user_token_{user.id}", token, timeout=60)
+        cache.set(f"user_id_by_token_{token}", user.id, time=60)
 
         send_welcome_email.delay(user.id, token)
 
         return user
 
-class UserLoginSerializer(Serializer):
+
+class SignInSerializer(Serializer):
     email = serializers.EmailField(max_length=40, required=True)
     password = serializers.CharField(max_length=40, required=True, write_only=True)
+
+    class Meta:
+        model = User
+        fields = ('email', 'password')

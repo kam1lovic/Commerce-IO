@@ -72,7 +72,7 @@ TEMPLATES = [
 WSGI_APPLICATION = "root.wsgi.application"
 
 DATABASES = {
-    "default": dj_database_url.config(default=os.getenv('DATABASE_URL'))
+    "default": dj_database_url.config(default=os.getenv('DATABASE_URL')),
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -293,8 +293,6 @@ CELERY_TIMEZONE = 'UTC'
 
 EMAIL_SSL_VERSION = ssl.PROTOCOL_TLSv1_2
 EMAIL_SSL_CAFILE = '/etc/ssl/certs/ca-certificates.crt'
-
-DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
 AWS_ACCESS_KEY_ID = os.getenv('MINIO_ACCESS_KEY')
 AWS_SECRET_ACCESS_KEY = os.getenv('MINIO_SECRET_KEY')

@@ -2,14 +2,15 @@ from django.contrib.auth import authenticate
 from django.core.cache import cache
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
-from rest_framework.generics import CreateAPIView
-from rest_framework.permissions import AllowAny
+from rest_framework.generics import CreateAPIView, GenericAPIView
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from users.models import User
-from users.serializers import SignUpSerializer, UserLoginSerializer
+from users.serializers import SignUpSerializer, SignInSerializer
 from users.tasks import generate_unique_invitation_code
 
 
@@ -24,10 +25,9 @@ class UserCreateAPIView(CreateAPIView):
 class ConfirmAccountView(APIView):
     permission_classes = [AllowAny]
 
-
-    def get(self, request, user_id, token):
-        cached_token = cache.get(f"user_token_{user_id}")
-        if cached_token == token:
+    def get(self, request, token):
+        user_id = cache.get(f"user_id_by_token_{token}")
+        if user_id:
             try:
                 user = User.objects.get(pk=user_id)
                 user.public_offer = True
@@ -42,11 +42,12 @@ class ConfirmAccountView(APIView):
 
 
 @extend_schema(tags=['Authorizations'])
-class UserLoginAPIView(APIView):
+class UserLoginAPIView(GenericAPIView):
+    serializer_class = SignInSerializer
     permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
-        serializer = UserLoginSerializer(data=request.data)
+        serializer = SignInSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         if user := authenticate(email=serializer.validated_data['email'],
                                 password=serializer._validated_data['password'], is_active=True):
@@ -56,3 +57,17 @@ class UserLoginAPIView(APIView):
             }
             return Response(response, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@extend_schema(tags=['Authorizations'])
+class LogoutAPIView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        try:
+            request.user.auth_token.delete()
+        except (AttributeError, Token.DoesNotExist):
+            return Response({"detail": "Token not found."}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({"detail": "Successfully logged out."}, status=status.HTTP_200_OK)
