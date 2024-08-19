@@ -1,10 +1,9 @@
 from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from rest_framework import serializers
-from rest_framework.serializers import Serializer, ModelSerializer, CharField
-
+from rest_framework.serializers import CharField, ModelSerializer, Serializer
 from users.models import User
-from users.tasks import send_welcome_email, generate_token
+from users.tasks import generate_token, send_welcome_email
 
 
 class SignUpSerializer(ModelSerializer):
@@ -25,7 +24,7 @@ class SignUpSerializer(ModelSerializer):
         user = User.objects.create_user(**validated_data)
 
         token = generate_token()
-        cache.set(f"user_id_by_token_{token}", user.id, time=60)
+        cache.set(f"user_id_by_token_{token}", user.id, timeout=60)
 
         send_welcome_email.delay(user.id, token)
 

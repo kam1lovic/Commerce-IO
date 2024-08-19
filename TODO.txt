@@ -82,4 +82,11 @@ TASK
 7. CRUD category (pagination va filterni ham etiborga olish) ✅
 
 
+1. API nomlari bir xil bo'lishi kerak
+2. Pagination bir xil bo'lishi kerak sort va size
+3. Spectacularda dynamic serializer bir xil bo'lishi kerak
+
+
+
+
 https://github.com/ui/django-post_office

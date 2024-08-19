@@ -2,7 +2,6 @@ import pytest
 from dotenv import load_dotenv
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APIClient
-
 from shops.models import Category, Country, Currency, Shop, ShopCategory
 from users.models import Plan, User
 
@@ -145,5 +144,3 @@ def category(shop):
         status='active',
         shop=shop
     )
-
-

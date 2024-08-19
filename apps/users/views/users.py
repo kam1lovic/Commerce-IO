@@ -10,7 +10,10 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from users.models import User
-from users.serializers import SignUpSerializer, SignInSerializer
+from users.serializers.users import (
+    SignInSerializer,
+    SignUpSerializer,
+)
 from users.tasks import generate_unique_invitation_code
 
 

@@ -6,7 +6,6 @@ from django.conf import settings
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.urls import reverse
-
 from users.models import User
 
 
@@ -29,6 +28,31 @@ def send_welcome_email(user_id, token):
         pass
     except Exception as e:
         print(f'ERROR: {e}')
+
+
+#
+#
+# @shared_task
+# def send_reset_email(user_id, token):
+#     try:
+#         user = User.objects.get(id=user_id)
+#         reset_url = f"{settings.DOMAIN}{reverse('password_reset_confirm', args=[token])}"
+#         email_html_message = render_to_string('reset_link.html', {
+#             'user': user,
+#             'reset_url': reset_url,
+#         })
+#         email_subject = 'Parolni tiklash'
+#         email = EmailMessage(
+#             subject=email_subject,
+#             body=email_html_message,
+#             to=[user.email],
+#         )
+#         email.content_subtype = 'html'
+#         email.send(fail_silently=False)
+#     except User.DoesNotExist:
+#         print(f'ERROR: User with id {user_id} does not exist.')
+#     except Exception as e:
+#         print(f'ERROR: {e}')
 
 
 def generate_token():

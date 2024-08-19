@@ -1,9 +1,25 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
 from django.contrib.auth.validators import UnicodeUsernameValidator
-from django.db.models import CharField, ForeignKey, CASCADE, TextField, IntegerField, BooleanField, \
-    DateTimeField, OneToOneField, EmailField, SET_NULL, BigIntegerField, TextChoices, RESTRICT, Model, \
-    PositiveIntegerField, ManyToManyField, URLField, DateField
-
+from django.db.models import (
+    CASCADE,
+    RESTRICT,
+    SET_NULL,
+    BigIntegerField,
+    BooleanField,
+    CharField,
+    DateField,
+    DateTimeField,
+    EmailField,
+    ForeignKey,
+    IntegerField,
+    ManyToManyField,
+    Model,
+    OneToOneField,
+    PositiveIntegerField,
+    TextChoices,
+    TextField,
+    URLField,
+)
 from shared.django.models import CreatedBaseModel
 from users.managers import CustomUserManager
 

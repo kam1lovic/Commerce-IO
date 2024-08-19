@@ -2,8 +2,7 @@ import random
 
 from django.core.management.base import BaseCommand
 from faker import Faker
-
-from shops.models import Shop, Category
+from shops.models import Category, Shop
 
 
 class Command(BaseCommand):

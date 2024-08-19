@@ -1,8 +1,27 @@
-from django.contrib.contenttypes.fields import GenericRelation, GenericForeignKey
-from django.db.models import Model, CharField, ForeignKey, CASCADE, TextField, TextChoices, ManyToManyField, \
-    IntegerField, FloatField, BooleanField, DateTimeField, OneToOneField, URLField, PositiveSmallIntegerField, \
-    TimeField, DecimalField, CheckConstraint, Q, F, PositiveIntegerField, EmailField
-
+from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
+from django.db.models import (
+    CASCADE,
+    BooleanField,
+    CharField,
+    CheckConstraint,
+    DateTimeField,
+    DecimalField,
+    EmailField,
+    F,
+    FloatField,
+    ForeignKey,
+    IntegerField,
+    ManyToManyField,
+    Model,
+    OneToOneField,
+    PositiveIntegerField,
+    PositiveSmallIntegerField,
+    Q,
+    TextChoices,
+    TextField,
+    TimeField,
+    URLField,
+)
 from shared.django.models import CreatedBaseModel
 
 
@@ -54,7 +73,7 @@ class Shop(CreatedBaseModel):
     phone_number = CharField("Telefon raqami", max_length=50, null=True, blank=True)
 
     country = ForeignKey("shops.Country", CASCADE, verbose_name="Ro'yxatdan o'tgan davlat")
-    languages = ManyToManyField("shops.Language", blank=True, verbose_name="Til")
+    languages = ManyToManyField("shops.Language", null=True, blank=True, verbose_name="Til")
     services = ManyToManyField('orders.Service', through='orders.ShopService')
     category = ForeignKey("shops.ShopCategory", CASCADE, verbose_name="Kategoriyalar")
     status = CharField(max_length=8, choices=Status.choices, db_default=Status.ACTIVE)

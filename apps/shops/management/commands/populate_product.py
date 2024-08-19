@@ -3,8 +3,7 @@ from decimal import Decimal
 
 from django.core.management.base import BaseCommand
 from faker import Faker
-
-from shops.models import Category, Weight, Length, Product
+from shops.models import Category, Length, Product, Weight
 
 
 class Command(BaseCommand):

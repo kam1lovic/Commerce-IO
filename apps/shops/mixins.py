@@ -1,6 +1,5 @@
 from rest_framework.exceptions import NotFound
 from rest_framework.generics import get_object_or_404
-
 from shops.models import Shop
 
 
