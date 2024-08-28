@@ -82,11 +82,17 @@ TASK
 7. CRUD category (pagination va filterni ham etiborga olish) ✅
 
 
-1. API nomlari bir xil bo'lishi kerak
-2. Pagination bir xil bo'lishi kerak sort va size
-3. Spectacularda dynamic serializer bir xil bo'lishi kerak
-
-
+1. API nomlari bir xil bo'lishi kerak ✅
+2. Pagination bir xil bo'lishi kerak sort va size ✅
+3. Spectacularda dynamic serializer fieldlar alohida chiqishi kerak ✅
+4. Category uchun test yozish kerak ❌ va pagination filter qoshish kerak ✅
+5. Product CRUD yozish kerak
+6. shop list api da botcommerce bilan 1ga 1 qilish kk
+7. bolaklash .env, settings.py
 
 
 https://github.com/ui/django-post_office
+
+
+TEACHER
+1. query number test

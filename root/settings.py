@@ -10,7 +10,6 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(os.path.join(BASE_DIR, 'apps'))
 
 SECRET_KEY = os.getenv('SECRET_KEY')
@@ -70,6 +69,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "root.wsgi.application"
+AUTH_USER_MODEL = 'users.User'
 
 DATABASES = {
     "default": dj_database_url.config(default=os.getenv('DATABASE_URL')),
@@ -118,10 +118,9 @@ SPECTACULAR_SETTINGS = {
     ),
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
-    'SWAGGER_UI_SETTINGS':
-        {
-            'persistAuthorization': True
-        },
+    'SWAGGER_UI_SETTINGS': {
+        'persistAuthorization': True
+    },
     "SERVERS": [
         {
             "url": "http://localhost:8000",
@@ -307,7 +306,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-AUTH_USER_MODEL = 'users.User'
-DOMAIN = 'http://localhost:8000'

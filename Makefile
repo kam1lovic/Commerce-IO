@@ -16,7 +16,7 @@ initdb:
 	python3 manage.py populate_user 20
 	python3 manage.py populate_shop 5
 	python3 manage.py populate_category 20
-	python3 manage.py populate_product 40
+	python3 manage.py populate_product -c 40
 
 freeze:
 	pip freeze > requirements.txt

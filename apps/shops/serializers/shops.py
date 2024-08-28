@@ -1,7 +1,7 @@
 from rest_framework.fields import CurrentUserDefault, HiddenField
 from rest_framework.generics import get_object_or_404
 from rest_framework.relations import PrimaryKeyRelatedField
-from shared.django.serializers import DynamicFieldsModelSerializer
+from shared.restframework.serializers import DynamicFieldsModelSerializer
 from shops.models import Language, Shop
 from shops.serializers.others import CountryModelSerializer
 from users.models import Plan

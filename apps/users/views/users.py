@@ -1,4 +1,3 @@
-from django.contrib.auth import authenticate
 from django.core.cache import cache
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
@@ -9,11 +8,8 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from users.models import User
-from users.serializers.users import (
-    SignInSerializer,
-    SignUpSerializer,
-)
+from users.models.users import User
+from users.serializers.users import SignInSerializer, SignUpSerializer
 from users.tasks import generate_unique_invitation_code
 
 
@@ -27,9 +23,11 @@ class UserCreateAPIView(CreateAPIView):
 @extend_schema(tags=['Authorizations'])
 class ConfirmAccountView(APIView):
     permission_classes = [AllowAny]
+    serializer_class = None
 
-    def get(self, request, token):
-        user_id = cache.get(f"user_id_by_token_{token}")
+    @staticmethod
+    def get(request, token):
+        user_id = cache.get(f"email_confirm_token_{token}")
         if user_id:
             try:
                 user = User.objects.get(pk=user_id)
@@ -49,28 +47,33 @@ class UserLoginAPIView(GenericAPIView):
     serializer_class = SignInSerializer
     permission_classes = [AllowAny]
 
-    def post(self, request, *args, **kwargs):
-        serializer = SignInSerializer(data=request.data)
+    def authenticate_user(self, request):
+        serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        if user := authenticate(email=serializer.validated_data['email'],
-                                password=serializer._validated_data['password'], is_active=True):
-            token, created = Token.objects.get_or_create(user=user)
-            response = {
-                'token': token.key
-            }
-            return Response(response, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        user = serializer.validated_data['user']
+        return user
+
+    def post(self, request, *args, **kwargs):
+        user = self.authenticate_user(request)
+        token, created = Token.objects.get_or_create(user=user)
+        response = {
+            'token': token.key
+        }
+        return Response(response, status=status.HTTP_200_OK)
 
 
 @extend_schema(tags=['Authorizations'])
 class LogoutAPIView(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
+    serializer_class = None
 
-    def post(self, request, *args, **kwargs):
+    @staticmethod
+    def post(request, *args, **kwargs):
         try:
             request.user.auth_token.delete()
         except (AttributeError, Token.DoesNotExist):
             return Response({"detail": "Token not found."}, status=status.HTTP_400_BAD_REQUEST)
 
         return Response({"detail": "Successfully logged out."}, status=status.HTTP_200_OK)
+

@@ -10,7 +10,7 @@ class Command(BaseCommand):
     help = 'Populates the Product model with fake data'
 
     def add_arguments(self, parser):
-        parser.add_argument('count', type=int, help='Number of fake records to create')
+        parser.add_argument('-c', '--count', type=int, help='Number of fake records to create')
 
     def handle(self, *args, **kwargs):
         count = kwargs['count']

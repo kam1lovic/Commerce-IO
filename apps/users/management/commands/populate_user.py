@@ -2,8 +2,8 @@ import random
 
 from django.core.management.base import BaseCommand
 from faker import Faker
-from shops.models import Language
-from users.models import User
+from shops.models.others import Language
+from users.models.users import User
 
 
 class Command(BaseCommand):

@@ -1,11 +1,12 @@
-from shared.django.serializers import DynamicFieldsModelSerializer
-from shops.models import Category
+from shared.restframework.serializers import DynamicFieldsModelSerializer
+from shops.models import ShopCategory
+from shops.models.categories import Category
 
 
-class CategoryDynamicFieldsModelSerializer(DynamicFieldsModelSerializer):
+class ShopCategoryDynamicFieldsModelSerializer(DynamicFieldsModelSerializer):
     class Meta:
-        model = Category
-        exclude = ('id', 'created_at', 'updated_at', 'position', 'shop')
+        model = ShopCategory
+        fields = '__all__'
 
     def create(self, validated_data):
         user = self.context['request'].user

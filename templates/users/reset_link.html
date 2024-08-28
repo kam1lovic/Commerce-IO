@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border: 1px solid #d0d0d0;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .email-container img.logo {
+            width: 100px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .email-container h3 {
+            color: #333333;
+            text-align: center;
+        }
+
+        .email-container p {
+            color: #555555;
+            line-height: 1.6;
+        }
+
+        .email-container .button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #3273dc;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .email-container .button:hover {
+            background-color: #2a63b9;
+        }
+
+        .email-container .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #999999;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="email-container">
+    <div style="text-align:center; border-bottom:solid 1px #d0d0d0; padding-bottom: 20px;">
+        <img src="https://fra1.digitaloceanspaces.com/botcommerce/static/images/logo_mini.png" class="logo" alt="Logo">
+    </div>
+
+    <div class="content">
+        <h2>Salom {{ user.first_name }} {{ user.last_name }} </h2>
+        <p style="text-align:center;">
+            <a href="{{ activate_url }}" class="button" target="_blank">Parolni o'zgartirish</a>
+        </p>
+        <p>Agar tugma ishlamay qolsa ushbu linkni bosing {{ activate_url }}</p>
+
+    </div>
+    <div class="footer">
+        <p>© 2024 XCDM Limited.</p>
+    </div>
+</div>
+
+</body>
+</html>

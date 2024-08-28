@@ -1,21 +1,22 @@
 from django.urls import path
-from shops.views.category import (
-    CategoryListCreateAPIView,
-    CategoryRetrieveUpdateDestroyAPIView,
-)
+
+from shops.views.categories import CategoryListCreateAPIView, CategoryUpdateDestroyAPIView
 from shops.views.others import CountryListAPIView
-from shops.views.shops import ShopListCreateAPIView, ShopRetrieveDestroyAPIView
+from shops.views.shops import (
+    ShopListCreateAPIView,
+    ShopRetrieveUpdateDestroyAPIView,
+)
 
 app_name = 'shops'
 
 urlpatterns = [
     # Shop
     path('shop', ShopListCreateAPIView.as_view(), name='create-list'),
-    path('shop/<int:pk>/detail', ShopRetrieveDestroyAPIView.as_view(), name='retrieve-destroy'),
+    path('shop/<int:pk>/detail', ShopRetrieveUpdateDestroyAPIView.as_view(), name='retrieve-update-destroy'),
 
     # Category
-    path('categories', CategoryListCreateAPIView.as_view(), name='category-create-list'),
-    path('categories/<int:pk>/detail', CategoryRetrieveUpdateDestroyAPIView.as_view(), name='category-retrieve-destroy'),
+    path('category', CategoryListCreateAPIView.as_view(), name='category-create-list'),
+    path('shop/<int:pk>/category', CategoryUpdateDestroyAPIView.as_view(), name='category-update-destroy'),
 
     # Others
     path('countries', CountryListAPIView.as_view(), name='country-list'),
