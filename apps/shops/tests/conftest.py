@@ -1,9 +1,7 @@
 import pytest
-from django.core.management import call_command
 from rest_framework.test import APIClient
 
-from shops.models import (Category, Country, Currency, Product, Shop,
-                          ShopCategory)
+from shops.models import Category, Country, Currency, Product, Shop, ShopCategory
 from shops.tests.factories import CategoryFactory
 from users.models import Plan, User
 
@@ -65,11 +63,6 @@ def shop_category():
 
 
 @pytest.fixture(scope='function')
-def commerce_fixture():
-    call_command("loaddata", "shop_category", "country", "currency")
-
-
-@pytest.fixture(scope='function')
 def currency():
     return Currency.objects.create(name="so'm", order=1)
 
@@ -80,7 +73,7 @@ def plan():
 
 
 @pytest.fixture(scope='function')
-def shop(user1, country, shop_category, currency, plan):
+def shop11(user1, country, shop_category, currency, plan):
     shop = Shop.objects.create(
         name="Shop test",
         phone="+998997711310",
@@ -110,7 +103,7 @@ def shop(user1, country, shop_category, currency, plan):
 
 
 @pytest.fixture(scope='function')
-def shop1(user1, country, shop_category, currency, plan):
+def shop12(user1, country, shop_category, currency, plan):
     return Shop.objects.create(
         name="Shop test",
         phone="+998997711310",
